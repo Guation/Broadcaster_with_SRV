@@ -1,0 +1,3 @@
+[submodule "Broadcaster"]
+	path = Broadcaster
+	url = git@github.com:MCXboxBroadcast/Broadcaster.git

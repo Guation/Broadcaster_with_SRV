@@ -1,0 +1,68 @@
+# Core session settings
+session:
+  # 广播频率 单位秒
+  # 警告：由于xbox速率限制，此值不得低于20
+  update-interval: 30
+
+  # 查询并同步目标服务器信息
+  query-server: true
+
+  # 本机无法查询目标服务器时使用checker.geysermc.org提供的查询服务
+  web-query-fallback: false
+
+  # 所有查询方法都失效时使用静态参数作为展示的服务器信息
+  config-fallback: false
+
+  # 这些信息将广播到xbox live
+  session-info:
+    # 主MOTD
+    host-name: "Geyser Test Server"
+    # 副MOTD
+    world-name: "\u00A7aGeyserMC \u00A7bDemo \u00A7f& \u00A7cTest \u00A7fServer"
+    players: 0
+    max-players: 20
+    # 服务器地址
+    ip: test.geysermc.org
+    # 服务器端口，当值为0时且启用了query-server，程序将尝试解析ip字段对应的SRV记录
+    # 如果未能查询到SRV，port将回落到19132
+    port: 0
+
+# 好友/粉丝列表同步设置
+friend-sync:
+  # 检查粉丝变更的频率 单位秒
+  # 警告：由于xbox速率限制，此值不得低于20
+  update-interval: 60
+
+  # 应该自动回关粉丝吗
+  auto-follow: true
+
+  # 应该自动取关非粉丝吗
+  auto-unfollow: true
+
+  # 我们应该自动向好友发送游戏邀请吗
+  initial-invite: true
+
+# Slack webhook settings
+slack-webhook:
+  # Should we send a message to a slack webhook when the session is updated
+  enabled: false
+
+  # The webhook url to send the message to
+  webhook-url: ""
+
+  # The message to send when the session is expired and needs to be updated
+  session-expired-message: |
+    <!here> Xbox Session expired, sign in again to update it.
+    
+    Use the following link to sign in: %s
+    Enter the code: %s
+
+  # The message to send when a friend has restrictions in place that prevent them from be friend with our account
+  friend-restriction-message: |
+    %s (%s) has restrictions in place that prevent them from be friend with our account.
+
+# 打开debug日志
+debug-log: false
+
+# 在debug日志中不显示 "Updated session!" 的日志
+suppress-session-update-info: false
