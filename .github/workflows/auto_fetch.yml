@@ -1,0 +1,41 @@
+name: Auto fetch
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # 每天 UTC 0:00
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: 'recursive'
+        fetch-depth: 1
+
+    - name: Update submodule
+      run: |
+        cd Broadcaster
+        latest_release=$(curl https://api.github.com/repos/MCXboxBroadcast/Broadcaster/releases/latest 2>/dev/null | jq .target_commitish -r)
+        now_commit=$(git rev-parse HEAD)
+        echo latest_release=${latest_release} now_commit=${now_commit}
+        [ "$latest_release" == "$now_commit" ] && exit 0
+        echo Start update Broadcaster.
+        echo Before the update.
+        git show HEAD --shortstat
+        git fetch
+        git reset --hard $latest_release
+        echo After the update.
+        git show HEAD --shortstat
+        cd ..
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git add .
+        git commit -m "Auto-update at $(date)"
+        echo Auto update info.
+        git show HEAD --shortstat
+        git push
