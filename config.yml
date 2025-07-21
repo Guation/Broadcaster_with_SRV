@@ -5,6 +5,7 @@ session:
   update-interval: 30
 
   # 查询并同步目标服务器信息
+  # 如果需要使用SRV记录，本选项必须启用
   query-server: true
 
   # 本机无法查询目标服务器时使用checker.geysermc.org提供的查询服务
