@@ -60,7 +60,7 @@ jobs:
 
     - name: Packaging and archiving
       run: |
-        tar -czvf Broadcaster_SRV.tgz config.yml LICENSE server.json zh_CN.json -C Broadcaster/bootstrap/standalone/build/libs MCXboxBroadcastStandalone.jar
+        tar -czvf Broadcaster_SRV.tgz config.yml LICENSE -C Broadcaster/bootstrap/standalone/build/libs MCXboxBroadcastStandalone.jar
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
