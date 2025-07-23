@@ -8,12 +8,15 @@ on:
 jobs:
   update:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
     - uses: actions/checkout@v4
       with:
         submodules: 'recursive'
         fetch-depth: 1
+        token: ${{ secrets.PUSH_TOKEN }}
 
     - name: Update submodule
       run: |
@@ -36,4 +39,4 @@ jobs:
         git commit -m "Auto-update at $(date)"
         echo Auto update info.
         git show HEAD --shortstat
-        git push "https://actions:${{ secrets.PUSH_TOKEN }}@github.com/${{ github.repository }}.git" HEAD:main
+        git push
