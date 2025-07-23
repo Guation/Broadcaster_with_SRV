@@ -8,11 +8,10 @@ on:
 jobs:
   update:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
 
     steps:
     - uses: actions/checkout@v4
+      persist-credentials: false
       with:
         submodules: 'recursive'
         fetch-depth: 1
@@ -20,15 +19,15 @@ jobs:
     - name: Update submodule
       run: |
         cd Broadcaster
-        latest_release=$(curl https://api.github.com/repos/MCXboxBroadcast/Broadcaster/releases/latest 2>/dev/null | jq .target_commitish -r)
-        now_commit=$(git rev-parse HEAD)
-        echo latest_release=${latest_release} now_commit=${now_commit}
-        [ "$latest_release" == "$now_commit" ] && exit 0
+        latest_tag=$(curl https://api.github.com/repos/MCXboxBroadcast/Broadcaster/releases/latest 2>/dev/null | jq .tag_name -r)
+        now_tag=$(git tag --points-at HEAD)
+        echo latest_tag=${latest_tag} now_tag=${now_tag}
+        [ "$latest_tag" == "$now_tag" ] && exit 0
         echo Start update Broadcaster.
         echo Before the update.
         git show HEAD --shortstat
         git fetch
-        git reset --hard $latest_release
+        git reset --hard $(git show-ref ${latest_tag} | awk '{print $1}')
         echo After the update.
         git show HEAD --shortstat
         cd ..
@@ -38,4 +37,4 @@ jobs:
         git commit -m "Auto-update at $(date)"
         echo Auto update info.
         git show HEAD --shortstat
-        git push
+        git push "https://${{ secrets.PUSH_TOKEN }}@github.com/${{ github.repository }}.git" HEAD:main

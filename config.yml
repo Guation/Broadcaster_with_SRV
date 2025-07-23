@@ -43,6 +43,15 @@ friend-sync:
   # 我们应该自动向好友发送游戏邀请吗
   initial-invite: true
 
+  # 我们应该删除长时间未加入服务器的人的好友吗
+  should-expire: true
+  
+  # 删除多少天未加入服务器的人的好友
+  expire-days: 15
+
+  # 多久检查一次过期好友 单位秒
+  expire-check: 1800
+
 # Slack webhook settings
 slack-webhook:
   # Should we send a message to a slack webhook when the session is updated
