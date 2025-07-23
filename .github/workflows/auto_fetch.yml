@@ -18,6 +18,7 @@ jobs:
     - name: Update submodule
       run: |
         cd Broadcaster
+        git fetch
         latest_tag=$(curl https://api.github.com/repos/MCXboxBroadcast/Broadcaster/releases/latest 2>/dev/null | jq .tag_name -r)
         now_tag=$(git tag --points-at HEAD)
         echo latest_tag=${latest_tag} now_tag=${now_tag}
@@ -25,7 +26,6 @@ jobs:
         echo Start update Broadcaster.
         echo Before the update.
         git show HEAD --shortstat
-        git fetch
         git reset --hard $(git show-ref ${latest_tag} | awk '{print $1}')
         echo After the update.
         git show HEAD --shortstat
@@ -36,4 +36,4 @@ jobs:
         git commit -m "Auto-update at $(date)"
         echo Auto update info.
         git show HEAD --shortstat
-        git push "https://${{ secrets.PUSH_TOKEN }}@github.com/${{ github.repository }}.git" HEAD:main
+        git push "https://actions:${{ secrets.PUSH_TOKEN }}@github.com/${{ github.repository }}.git" HEAD:main
