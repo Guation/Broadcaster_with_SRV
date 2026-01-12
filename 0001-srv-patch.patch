@@ -1,4 +1,4 @@
-From e5d4ed310ead1e7fe0f563b2450df79c248224f9 Mon Sep 17 00:00:00 2001
+From 6503e8d9153d6057197e8b0aebba67fa7512989d Mon Sep 17 00:00:00 2001
 From: Guation <guation@163.com>
 Date: Fri, 18 Jul 2025 16:40:49 +0800
 Subject: [PATCH] srv patch
@@ -8,10 +8,10 @@ Subject: [PATCH] srv patch
  1 file changed, 41 insertions(+)
 
 diff --git a/bootstrap/standalone/src/main/java/com/rtm516/mcxboxbroadcast/bootstrap/standalone/StandaloneMain.java b/bootstrap/standalone/src/main/java/com/rtm516/mcxboxbroadcast/bootstrap/standalone/StandaloneMain.java
-index 7f58fb3..7f5ac60 100644
+index 10f1cc3..a43cde8 100644
 --- a/bootstrap/standalone/src/main/java/com/rtm516/mcxboxbroadcast/bootstrap/standalone/StandaloneMain.java
 +++ b/bootstrap/standalone/src/main/java/com/rtm516/mcxboxbroadcast/bootstrap/standalone/StandaloneMain.java
-@@ -25,6 +25,11 @@ import java.net.InetSocketAddress;
+@@ -21,6 +21,11 @@ import java.net.InetSocketAddress;
  import java.util.concurrent.ExecutionException;
  import java.util.concurrent.TimeUnit;
  
@@ -21,9 +21,9 @@ index 7f58fb3..7f5ac60 100644
 +import javax.naming.directory.InitialDirContext;
 +
  public class StandaloneMain {
-     private static StandaloneConfig config;
+     private static CoreConfig config;
      private static StandaloneLoggerImpl logger;
-@@ -124,6 +129,7 @@ public class StandaloneMain {
+@@ -104,6 +109,7 @@ public class StandaloneMain {
  
      private static void updateSessionInfo(SessionInfo sessionInfo) {
          if (config.session().queryServer()) {
@@ -31,7 +31,7 @@ index 7f58fb3..7f5ac60 100644
              try {
                  InetSocketAddress addressToPing = new InetSocketAddress(sessionInfo.getIp(), sessionInfo.getPort());
                  BedrockPong pong = PingUtil.ping(addressToPing, 1500, TimeUnit.MILLISECONDS).get();
-@@ -147,4 +153,39 @@ public class StandaloneMain {
+@@ -137,4 +143,39 @@ public class StandaloneMain {
              }
          }
      }
