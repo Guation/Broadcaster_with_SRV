@@ -1,4 +1,4 @@
-# Core session settings
+# 核心设置
 session:
   # 广播频率 单位秒
   # 警告：由于xbox速率限制，此值不得低于20
@@ -9,21 +9,30 @@ session:
   query-server: true
 
   # 本机无法查询目标服务器时使用checker.geysermc.org提供的查询服务
+  # 在Docker网络或路由问题导致本地ping失败的情况下，这可能很有用
+  # 如果需要使用SRV记录，本选项必须禁用
   web-query-fallback: false
 
   # 所有查询方法都失效时使用静态参数作为展示的服务器信息
   config-fallback: false
 
-  # 这些信息将广播到xbox live
+  # 这些是可能被广播到xbox live的静态参数信息
   session-info:
     # 主MOTD
-    host-name: "Geyser Test Server"
+    host-name: Geyser Test Server
+
     # 副MOTD
-    world-name: "\u00A7aGeyserMC \u00A7bDemo \u00A7f& \u00A7cTest \u00A7fServer"
+    world-name: GeyserMC Demo & Test Server
+
+    # 当前玩家数量
     players: 0
+
+    # 最大玩家数量
     max-players: 20
+
     # 服务器地址
     ip: test.geysermc.org
+
     # 服务器端口，当值为0时且启用了query-server，程序将尝试解析ip字段对应的SRV记录
     # 如果未能查询到SRV，port将回落到19132
     port: 0
@@ -43,36 +52,41 @@ friend-sync:
   # 我们应该自动向好友发送游戏邀请吗
   initial-invite: true
 
-  # 我们应该删除长时间未加入服务器的人的好友吗
-  should-expire: true
-  
-  # 删除多少天未加入服务器的人的好友
-  expire-days: 15
+  # 好友过期设置
+  expiry:
+    # 我们应该删除长时间未加入服务器的人的好友吗
+    enabled: true
 
-  # 多久检查一次过期好友 单位秒
-  expire-check: 1800
+    # 删除多少天未加入服务器的人的好友
+    days: 15
 
-# Slack webhook settings
-slack-webhook:
-  # Should we send a message to a slack webhook when the session is updated
+    # 多久检查一次过期好友 单位秒
+    check: 1800
+
+# 通知设置 （例如， Slack/Discord webhook）
+notifications:
+  # 我们应该推送session更新到webhook吗
   enabled: false
 
-  # The webhook url to send the message to
-  webhook-url: ""
+  # 用于连接到webhook的url
+  # 如果您在使用discord应该添加"/slack"到url尾部
+  webhook-url: ''
 
-  # The message to send when the session is expired and needs to be updated
-  session-expired-message: |
+  # session过期需要更新时向webhook发送这个消息
+  session-expired-message: |-
     <!here> Xbox Session expired, sign in again to update it.
-    
+
     Use the following link to sign in: %s
     Enter the code: %s
 
-  # The message to send when a friend has restrictions in place that prevent them from be friend with our account
-  friend-restriction-message: |
-    %s (%s) has restrictions in place that prevent them from be friend with our account.
+  # 当好友因限制设置无法与我们的账户建立好友关系时发送这条消息
+  friend-restriction-message: '%s (%s) has restrictions in place that prevent them from being friends with our account.'
 
 # 打开debug日志
-debug-log: false
+debug-mode: false
 
 # 在debug日志中不显示 "Updated session!" 的日志
-suppress-session-update-info: false
+suppress-session-update-message: false
+
+# 配置文件版本，不要修改这个
+config-version: 2

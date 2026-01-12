@@ -1,4 +1,4 @@
-From 6503e8d9153d6057197e8b0aebba67fa7512989d Mon Sep 17 00:00:00 2001
+From 3b40f9609f18f39754f0c3b34a3145dff049d7e3 Mon Sep 17 00:00:00 2001
 From: Guation <guation@163.com>
 Date: Fri, 18 Jul 2025 16:40:49 +0800
 Subject: [PATCH] srv patch
@@ -8,7 +8,7 @@ Subject: [PATCH] srv patch
  1 file changed, 41 insertions(+)
 
 diff --git a/bootstrap/standalone/src/main/java/com/rtm516/mcxboxbroadcast/bootstrap/standalone/StandaloneMain.java b/bootstrap/standalone/src/main/java/com/rtm516/mcxboxbroadcast/bootstrap/standalone/StandaloneMain.java
-index 10f1cc3..a43cde8 100644
+index 10f1cc3..11bea59 100644
 --- a/bootstrap/standalone/src/main/java/com/rtm516/mcxboxbroadcast/bootstrap/standalone/StandaloneMain.java
 +++ b/bootstrap/standalone/src/main/java/com/rtm516/mcxboxbroadcast/bootstrap/standalone/StandaloneMain.java
 @@ -21,6 +21,11 @@ import java.net.InetSocketAddress;
@@ -37,9 +37,9 @@ index 10f1cc3..a43cde8 100644
      }
 +
 +    private static void updateAddressInfo(SessionInfo sessionInfo) {
-+        if (config.session().sessionInfo().getPort() == 0) {
++        if (config.session().sessionInfo().port() == 0) {
 +            try {
-+                String domain = "_minecraft._udp." + config.session().sessionInfo().getIp();
++                String domain = "_minecraft._udp." + config.session().sessionInfo().ip();
 +                DirContext ctx = new InitialDirContext();
 +                Attributes attrs = ctx.getAttributes(
 +                    "dns:/" + domain,
@@ -66,7 +66,7 @@ index 10f1cc3..a43cde8 100644
 +            } catch (Exception e) {
 +                sessionManager.logger().error("Failed to retrieving SRV from hostname", e);
 +            }
-+            sessionInfo.setIp(config.session().sessionInfo().getIp());
++            sessionInfo.setIp(config.session().sessionInfo().ip());
 +            sessionInfo.setPort(19132);
 +        }
 +    }
